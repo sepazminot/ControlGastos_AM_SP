@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- Array para el Spinner de Tipos de Transacción -->
+    <string-array name="transaction_types">
+        <item>Mostrar Todo</item>
+        <item>Ingreso</item>
+        <item>Gasto</item>
+    </string-array>
+
+</resources>

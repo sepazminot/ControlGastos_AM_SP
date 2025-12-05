@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    android:paddingTop="8dp"
+    android:paddingBottom="8dp">
+
+    <!-- Fila de Nombre de Categoría y Porcentaje/Monto -->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="4dp"
+        android:gravity="center_vertical"
+        android:orientation="horizontal">
+
+        <!-- Nombre de la Categoría -->
+        <TextView
+            android:id="@+id/tv_category_name"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:textColor="#333333"
+            android:textStyle="bold"
+            tools:text="Comida y Bebidas" />
+
+        <!-- Porcentaje de Gasto -->
+        <TextView
+            android:id="@+id/tv_category_percentage"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="8dp"
+            android:textColor="#666666"
+            tools:text="35%" />
+
+        <!-- Monto Gastado -->
+        <TextView
+            android:id="@+id/tv_category_amount"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="#F44336"
+            android:textStyle="bold"
+            tools:text="$ 350.00" />
+    </LinearLayout>
+
+    <!-- Barra de Progreso Visual (simple) -->
+    <ProgressBar
+        android:id="@+id/category_progress_bar"
+        style="@android:style/Widget.ProgressBar.Horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="6dp"
+        android:backgroundTint="#EEEEEE"
+        android:max="100"
+        android:progress="35"
+        android:progressTint="#FFC107" />
+
+</LinearLayout>

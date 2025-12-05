@@ -1,0 +1,8 @@
+<resources>
+    <string name="app_name">ControlGastos_AM_SP</string>
+
+    <!-- Cadenas para la pantalla de filtros -->
+    <string name="filter_by_type">Filtrar por Tipo</string>
+    <string name="filter_by_category">Filtrar por Categoría</string>
+    <string name="filter_apply_button">Aplicar Filtros</string>
+</resources>

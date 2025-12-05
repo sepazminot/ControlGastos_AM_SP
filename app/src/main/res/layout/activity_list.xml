@@ -1,0 +1,107 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/main"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:padding="8dp"
+    tools:context=".Activity_List">
+
+    <!-- Sección de Filtros -->
+    <LinearLayout
+        android:id="@+id/filter_container"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@android:color/white"
+        android:elevation="2dp"
+        android:orientation="vertical"
+        android:paddingBottom="8dp">
+
+        <!-- Fila 1: Filtro de Tipo (Ingreso/Gasto) y Categoría -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="8dp"
+            android:orientation="horizontal">
+
+            <Spinner
+                android:id="@+id/spinner_type_filter"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:entries="@array/transaction_types"
+                android:prompt="@string/filter_by_type"
+                android:spinnerMode="dropdown" /> <!-- Debes definir @array/transaction_types -->
+
+            <Spinner
+                android:id="@+id/spinner_category_filter"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="8dp"
+                android:layout_weight="1"
+                android:prompt="@string/filter_by_category"
+                android:spinnerMode="dropdown" />
+        </LinearLayout>
+
+        <!-- Fila 2: Botón para Rango de Fechas (el que llama a applyFilters en la Activity) -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="8dp"
+            android:orientation="horizontal">
+
+            <TextView
+                android:id="@+id/tv_start_date_filter"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:background="@drawable/date_border"
+                android:clickable="true"
+                android:drawableEnd="@android:drawable/ic_menu_today"
+                android:focusable="true"
+                android:gravity="center_vertical"
+                android:padding="10dp"
+                android:text="Fecha Inicio"
+                android:textColor="#333333"
+                android:textSize="16sp" />
+
+            <TextView
+                android:id="@+id/tv_end_date_filter"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="8dp"
+                android:layout_weight="1"
+                android:background="@drawable/date_border"
+                android:clickable="true"
+                android:drawableEnd="@android:drawable/ic_menu_today"
+                android:focusable="true"
+                android:gravity="center_vertical"
+                android:padding="10dp"
+                android:text="Fecha Fin"
+                android:textColor="#333333"
+                android:textSize="16sp" />
+        </LinearLayout>
+
+        <Button
+            android:id="@+id/btn_filter_apply"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:backgroundTint="@color/colorPrimary"
+            android:text="Limpiar Filtros"
+            android:textColor="@android:color/white" />
+
+    </LinearLayout>
+
+    <!-- RecyclerView: El Contenedor de la Lista de Transacciones -->
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/rv_transactions"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:paddingTop="4dp"
+        android:scrollbars="vertical"
+        tools:listitem="@layout/item_transaction" />
+
+</LinearLayout>

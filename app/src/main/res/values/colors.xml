@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="black">#FF000000</color>
+    <color name="white">#FFFFFFFF</color>
+
+    <!-- Colores específicos para la aplicación de Transacciones -->
+
+    <!-- Para los botones y elementos de UI (colorPrimary) -->
+    <color name="colorPrimary">#007BFF</color>
+
+    <!-- Para montos de GASTOS (negativo/rojo) -->
+    <color name="expense_red">#DC3545</color>
+
+    <!-- Opcional: Para montos de INGRESOS (positivo/verde) -->
+    <color name="income_green">#28A745</color>
+
+    <!-- Opcional: Para el fondo del swipe de eliminación -->
+    <color name="delete_red">#E53935</color>
+
+    <color name="warning_orange">#FF5F15</color>
+
+</resources>
