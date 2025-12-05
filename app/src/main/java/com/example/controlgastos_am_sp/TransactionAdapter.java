@@ -31,7 +31,6 @@ public class TransactionAdapter extends RecyclerView.Adapter<TransactionAdapter.
     @NonNull
     @Override
     public TransactionViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        // Necesitas un layout llamado R.layout.item_transaction para cada fila
         View view = LayoutInflater.from(parent.getContext())
                 .inflate(R.layout.item_transaction, parent, false);
         return new TransactionViewHolder(view);
@@ -40,21 +39,13 @@ public class TransactionAdapter extends RecyclerView.Adapter<TransactionAdapter.
     @Override
     public void onBindViewHolder(@NonNull TransactionViewHolder holder, int position) {
         final Transactions transaction = transactions.get(position);
-
-        // Convertir el 'long' de la fecha a un String legible
         long timestampInMillis = transaction.date * 1000L;
         String dateString = dateFormat.format(new Date(timestampInMillis));
-
         holder.tvAmount.setText(String.format(Locale.getDefault(), "$ %.2f", transaction.amount));
         holder.tvDescription.setText(transaction.description != null ? transaction.description : "Sin descripción");
         holder.tvDate.setText(dateString);
-
-        // Muestra el ID de categoría, en una app real buscarías el nombre
         holder.tvCategory.setText("Cat ID: " + transaction.category);
-
-        // Estilo del Monto: Rojo para gastos, Verde para ingresos (asumiendo que los gastos son negativos)
         int colorResId = (transaction.amount < 0) ? R.color.expense_red : R.color.income_green;
-        // NOTA: Usar ContextCompat.getColor() para compatibilidad
         holder.tvAmount.setTextColor(holder.itemView.getContext().getResources().getColor(colorResId, null));
     }
 
@@ -63,7 +54,6 @@ public class TransactionAdapter extends RecyclerView.Adapter<TransactionAdapter.
         return transactions.size();
     }
 
-    // Método para manejar la eliminación después del swipe
     public Transactions removeItem(int position) {
         Transactions item = transactions.remove(position);
         notifyItemRemoved(position);
@@ -75,7 +65,6 @@ public class TransactionAdapter extends RecyclerView.Adapter<TransactionAdapter.
         notifyItemInserted(position);
     }
 
-    // Método para actualizar la lista de transacciones (usado en el filtrado y onResume)
     public void updateData(List<Transactions> newTransactions) {
         transactions.clear();
         transactions.addAll(newTransactions);
@@ -95,7 +84,6 @@ public class TransactionAdapter extends RecyclerView.Adapter<TransactionAdapter.
             tvDescription = itemView.findViewById(R.id.tv_description);
             tvDate = itemView.findViewById(R.id.tv_date);
 
-            // Manejar el CLICK para la edición
             itemView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {

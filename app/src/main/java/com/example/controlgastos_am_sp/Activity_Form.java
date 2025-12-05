@@ -31,7 +31,7 @@ import java.util.Map;
 
 public class Activity_Form extends AppCompatActivity {
 
-    EditText txtmonto, txtcategoria, txtdescripcion, txtfecha, txtmetodo, txtdivisa;
+    EditText txtmonto, txtdescripcion, txtfecha, txtmetodo, txtdivisa;
     private Spinner spinnerCategory;
     TextView txtresultado;
     Manager manager;
@@ -39,13 +39,10 @@ public class Activity_Form extends AppCompatActivity {
     private int transactionId = -1;
     private SharedPreferences sharedPreferences;
     String moneda;
-    private Button btnCrear;
 
     private Integer selectedCategoryId = null;
 
-    // Mapeo para traducir la posición del Spinner a la ID de la categoría
     private List<Integer> categoryIdList = new ArrayList<>();
-    // Mapeo para guardar el tipo (Ingreso/Gasto) de cada ID de categoría
     private Map<Integer, String> categoryIdToTypeMap = new HashMap<>();
 
     @Override
@@ -68,17 +65,15 @@ public class Activity_Form extends AppCompatActivity {
         txtdivisa = findViewById(R.id.txtdivisa);
         txtresultado = findViewById(R.id.txtresultado);
         spinnerCategory = findViewById(R.id.spinner_category_form);
-        btnCrear = findViewById(R.id.btncrear);
 
         setupCategorySpinner();
         Bundle extras = getIntent().getExtras();
 
         if (extras != null) {
-            // Asumimos que el ID de la transacción es de tipo Long
             transactionId = extras.getInt("TRANSACTION_ID", -1);
 
             if (transactionId != -1) {
-//                Toast.makeText(this, "Modo EDICIÓN: Cargando transacción ID: " + transactionId, Toast.LENGTH_LONG).show();
+                Toast.makeText(this, "Modo EDICIÓN: Cargando transacción ID: " + transactionId, Toast.LENGTH_LONG).show();
                 loadTransactionData(transactionId);
             } else {
                 Toast.makeText(this, "Modo CREACIÓN: Nueva Transacción", Toast.LENGTH_LONG).show();
@@ -144,16 +139,12 @@ public class Activity_Form extends AppCompatActivity {
 
         if (transaction != null) {
             txtmonto.setText(String.valueOf(transaction.amount));
-            // Corregido: Usar el ID de la categoría para seleccionar el elemento correcto del Spinner
             int categoryToSelectId = transaction.category;
 
-            // Encontrar la posición del ID de la categoría en la lista de IDs
             int position = categoryIdList.indexOf(categoryToSelectId);
 
             if (position != -1) {
-                // Seleccionar el ítem correcto en el Spinner
                 spinnerCategory.setSelection(position);
-                // También actualizar selectedCategoryId para que los listeners lo tengan
                 selectedCategoryId = categoryToSelectId;
             } else {
                 Log.w("Form", "Categoría ID " + categoryToSelectId + " no encontrada en el Spinner.");
@@ -170,43 +161,22 @@ public class Activity_Form extends AppCompatActivity {
     }
 
     private String formatDateFromTimestamp(long timestampInSeconds) {
-        // Paso clave: Convertir segundos (int) a milisegundos (long)
-        // La clase Date requiere milisegundos para ser inicializada.
         long timestampInMillis = timestampInSeconds * 1000L;
-
-        // Crear el objeto Date
         Date date = new Date(timestampInMillis);
-
-        // Formatear la fecha para la visualización (puedes cambiar "dd/MM/yyyy" al formato que desees)
         SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy", Locale.getDefault());
-
         return sdf.format(date);
     }
 
     private int convertDateStringToTimestamp(String dateString) {
-        // Define el formato exacto que el usuario está utilizando: AAAA/MM/D
-        // Si usas día de 1 dígito (1) o 2 dígitos (01), usar 'd' o 'dd' respectivamente.
-        // Si tu formato es exactamente "2025/12/1", usa "yyyy/MM/d"
         SimpleDateFormat parser = new SimpleDateFormat("dd/MM/yyyy", Locale.getDefault());
 
         try {
-            // 1. Parsear la cadena a un objeto Date
             Date date = parser.parse(dateString);
-
-            // 2. Obtener los milisegundos desde la época Unix
             long milliseconds = date.getTime();
-
-            // 3. Convertir a segundos (int), que es el formato de tu base de datos
-            // NOTA: Asegúrate que tu campo 'date' en la clase Transactions es 'int'
             return (int) (milliseconds / 1000L);
-
         } catch (ParseException e) {
-            // Si el usuario introduce un formato incorrecto (ej: "hola"),
-            // muestra un error y usa la fecha actual como valor predeterminado (fall-back).
             e.printStackTrace();
             Toast.makeText(this, "Error en el formato de fecha(dd/MM/yyyy). Usando fecha actual.", Toast.LENGTH_SHORT).show();
-
-            // Devolver la fecha actual en segundos como contingencia
             return (int) (System.currentTimeMillis() / 1000L);
         }
     }
@@ -259,7 +229,6 @@ public class Activity_Form extends AppCompatActivity {
         manager.fetchRates(moneda, target, new ConversionRateCallback() {
             @Override
             public void onSuccess(Double rate) {
-                // ESTE CÓDIGO SE EJECUTA CUANDO LA TASA LLEGA CORRECTAMENTE
                 Log.d("API", "Tasa de " + moneda + " a " + target + " recibida: " + rate);
                 double monto = Double.parseDouble(txtmonto.getText().toString());
                 double total = monto * rate;
@@ -274,24 +243,16 @@ public class Activity_Form extends AppCompatActivity {
                 Toast.makeText(Activity_Form.this, "Fallo al obtener la tasa", Toast.LENGTH_SHORT).show();
             }
         });
-        // La ejecución del programa continúa aquí, ANTES de que onSuccess o onFailure se llamen.
         Log.i("API", "La solicitud de tasas ha sido enviada (fetchRates ha terminado de ejecutarse).");
     }
 
-    /**
-     * Configura el listener para el Spinner de Categoría y carga todas las categorías.
-     */
     private void setupCategorySpinner() {
-        // Cargar todas las categorías al inicio
         loadAllCategories();
 
-        // Listener para el Spinner de CATEGORÍA
         spinnerCategory.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                // El 'position' ahora mapea directamente a categoryIdList
                 if (position >= 0 && position < categoryIdList.size()) {
-                    // Guarda el ID de la categoría seleccionada
                     selectedCategoryId = categoryIdList.get(position);
                     Log.d("Form", "Categoría seleccionada ID: " + selectedCategoryId +
                             " (Tipo: " + categoryIdToTypeMap.get(selectedCategoryId) + ")");
@@ -306,15 +267,11 @@ public class Activity_Form extends AppCompatActivity {
             }
         });
 
-        // Disparar la selección inicial si hay datos
         if (categoryIdList.size() > 0) {
             spinnerCategory.setSelection(0);
         }
     }
 
-    /**
-     * Carga el Spinner con todas las categorías (Ingreso y Gasto).
-     */
     private void loadAllCategories() {
         categoryIdList.clear();
         List<String> spinnerNames = new ArrayList<>();
@@ -342,7 +299,6 @@ public class Activity_Form extends AppCompatActivity {
         );
         spinnerCategory.setAdapter(categoryAdapter);
 
-        // Establecer la ID seleccionada inicial si existen categorías
         if (!categoryIdList.isEmpty()) {
             selectedCategoryId = categoryIdList.get(0);
         }

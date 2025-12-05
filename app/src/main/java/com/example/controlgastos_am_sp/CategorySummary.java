@@ -17,9 +17,4 @@ public class CategorySummary {
         return totalAmount;
     }
 
-    // Opcional: Si quieres un campo extra para el porcentaje
-    // public double getPercentage(double totalExpenses) {
-    //     return (totalAmount / totalExpenses) * 100;
-    // }
-
 }

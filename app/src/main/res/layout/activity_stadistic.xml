@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/main"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
@@ -42,14 +42,12 @@
                 android:textColor="#333333"
                 android:textStyle="bold" />
 
-            <!-- Aquí se insertará el gráfico (ej. PieChart o BarChart de una librería) -->
             <FrameLayout
                 android:id="@+id/chart_container"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:paddingTop="8dp">
 
-                <!-- Placeholder para el gráfico. En la Activity se añadiría el objeto gráfico aquí. -->
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -111,20 +109,17 @@
                 android:textSize="18sp"
                 android:textStyle="bold" />
 
-            <!-- Contenedor para la lista de categorías (usaremos un LinearLayout
-                 simple o RecyclerView, aquí se usa LinearLayout como ejemplo de slot) -->
-            <!-- Contenedor de la Lista de Categorías: CORREGIDO para usar RecyclerView -->
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/category_list_container"
-                app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:nestedScrollingEnabled="false"
+                app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
                 tools:listitem="@layout/item_category_summary" />
 
         </LinearLayout>
 
-        <!-- SECCIÓN 4: Botón o elemento para seleccionar el mes/filtro (opcional, pero útil) -->
+        <!-- SECCIÓN 4: Botón o elemento para seleccionar el mes/filtro -->
         <Button
             android:id="@+id/btn_select_month"
             android:layout_width="match_parent"

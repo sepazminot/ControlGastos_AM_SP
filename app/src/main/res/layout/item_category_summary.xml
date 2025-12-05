@@ -44,7 +44,7 @@
             tools:text="$ 350.00" />
     </LinearLayout>
 
-    <!-- Barra de Progreso Visual (simple) -->
+    <!-- Barra de Progreso Visual-->
     <ProgressBar
         android:id="@+id/category_progress_bar"
         style="@android:style/Widget.ProgressBar.Horizontal"

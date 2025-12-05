@@ -16,9 +16,7 @@ public class ExchangeRates {
     private String updated;
 
     @SerializedName("rates")
-    private Map<String, Double> rates; // Un mapa para guardar las tasas: Moneda (String) -> Tasa (Double)
-
-    // --- Getters y Setters ---
+    private Map<String, Double> rates;
 
     public String getResult() {
         return result;

@@ -33,7 +33,7 @@
                 android:layout_weight="1"
                 android:entries="@array/transaction_types"
                 android:prompt="@string/filter_by_type"
-                android:spinnerMode="dropdown" /> <!-- Debes definir @array/transaction_types -->
+                android:spinnerMode="dropdown" />
 
             <Spinner
                 android:id="@+id/spinner_category_filter"
@@ -45,7 +45,7 @@
                 android:spinnerMode="dropdown" />
         </LinearLayout>
 
-        <!-- Fila 2: Botón para Rango de Fechas (el que llama a applyFilters en la Activity) -->
+        <!-- Fila 2: Botón para Rango de Fechas -->
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
